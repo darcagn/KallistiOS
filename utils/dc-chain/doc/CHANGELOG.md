@@ -2,6 +2,7 @@
 
 | Date<br/>_____________ | Author(s)<br/>_____________ | Changes<br/>_____________ |
 |:-----------------------|:----------------------------|---------------------------|
+| 2025-01-13 | Eric Fradella | Add rustcjit target. Remove gccrs-dev and rustc-dev toolchain profiles. | 
 | 2024-08-11 | Eric Fradella | Fix ARM toolchain build error when JIT is enabled for SH toolchain. |
 | 2024-08-07 | Eric Fradella | Updated binutils to 2.43. Updated GCC 11 profile with support for GCC 11.5.0. |
 | 2024-08-01 | Eric Fradella | Updated GCC 14 profile with support for GCC 14.2.0. |

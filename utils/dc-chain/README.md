@@ -109,8 +109,6 @@ The following toolchain profiles are available for users to select in
 | 13.3.1-dev | 13.3.1 (git) | 4.5.0 | 2.43.1 | 8.5.0 | 2.43.1 | Bleeding edge GCC 13 series from git |
 | 14.2.1-dev | 14.2.1 (git) | 4.5.0 | 2.43.1 | 8.5.0 | 2.43.1 | Bleeding edge GCC 14 series from git |
 | 15.0.0-dev | 15.0.0 (git) | 4.5.0 | 2.43.1 | 8.5.0 | 2.43.1 | Bleeding edge GCC 15 series from git |
-| gccrs-dev | 14.x | 4.5.0 | 2.43.1 | 8.5.0 | 2.43.1 | GCC fork for development of the GCCRS Rust compiler |
-| rustc-dev | 14.x | 4.5.0 | 2.43.1 | 8.5.0 | 2.43.1 | GCC fork for development of the libgccjit rustc GCC codegen |
 
 The **stable** profile is the primary, widely tested target for KallistiOS, and
 is the most recent toolchain profile known to work with all example programs.
