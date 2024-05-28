@@ -71,6 +71,7 @@ include scripts/gcc-pass2.mk
 
 # ---- optional components {{{
 
+include scripts/rustcjit.mk
 include scripts/gdb.mk
 
 # ---- }}}}

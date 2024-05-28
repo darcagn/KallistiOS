@@ -256,13 +256,6 @@ ifdef enable_rust
   endif
 endif
 
-ifdef enable_libgccjit
-  ifneq (0,$(enable_libgccjit))
-    pass1_languages := $(pass1_languages),jit
-    gcc_pass1_configure_args += --enable-host-shared
-  endif
-endif
-
 # Function to verify variable is not empty
 # Args:
 # 1 - Variable Name

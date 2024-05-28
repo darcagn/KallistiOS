@@ -24,9 +24,13 @@ clean-builds: clean_patches_stamp
 	-rm -rf build-gcc-$(arm_target)-$(arm_gcc_ver)
 	-rm -rf build-binutils-$(sh_target)-$(sh_binutils_ver)
 	-rm -rf build-binutils-$(arm_target)-$(arm_binutils_ver)
+	-rm -rf build-gcc-$(sh_target)-rustc
 	-rm -rf build-$(gdb_name)
 
-clean-downloads: clean-gdb-sources clean-arm-sources clean-sh-sources
+clean-downloads: clean-rustcjit-sources clean-gdb-sources clean-arm-sources clean-sh-sources
+
+clean-rustcjit-sources:
+	-rm -rf $(rustcjit_name)
 
 clean-gdb-sources:
 	-rm -rf $(gdb_name)
