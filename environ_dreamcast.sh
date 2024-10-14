@@ -11,9 +11,9 @@ if [[ ":$PATH:" != *":${DC_TOOLS_BASE}:"* ]]; then
   export PATH="${PATH}:${DC_TOOLS_BASE}"
 fi
 
-# Default the SH4 floating point precision if it isn't already set.
+# Default the SH4 floating-point precision if it isn't already set.
 if [ -z "${KOS_SH4_PRECISION}" ] ; then
-    export KOS_SH4_PRECISION="-m4-single-only"
+    export KOS_SH4_PRECISION="-m4-single"
 fi
 
 export KOS_CFLAGS="${KOS_CFLAGS} ${KOS_SH4_PRECISION} -ml -ffunction-sections -fdata-sections -matomic-model=soft-imask -ftls-model=local-exec"
