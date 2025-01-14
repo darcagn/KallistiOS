@@ -12,6 +12,10 @@ Platform-specific changes are prefixed with the platform name, otherwise the cha
 - **Dreamcast**: Add pvr palette example [AB]
 - **Dreamcast**: Cleaned up, documented, and enhanced BIOS font API [FG]
 - Rework PVR hybrid mode + IRQ handling [PC]
+- Added implementation of thread barriers [LS]
+- Removed old pthreads implementation from kernel/libc [LS]
+- Added new (more complete/compliant) pthreads implementation in addons/libpthread [LS]
+- Added support for pthread_condattr_setclock() [FG]
 - **Dreamcast**: dc-chain: Add rustcjit target, remove gccrs-dev and rustc-dev toolchain profiles [EF]
 
 ## KallistiOS version 2.1.1

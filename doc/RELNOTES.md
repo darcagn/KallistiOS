@@ -3,6 +3,18 @@ Copyright (C) 2002, 2003 Megan Potter
 Copyright (C) 2012-2019 Lawrence Sebald
 Copyright (C) 2024 Donald Haase
 
+RELEASE NOTES for 2.2.0
+-----------------------
+
+# What's New in Version 2.2.0
+
+POSIX threading (pthreads) support has been moved out of the kernel and into
+its own addon library (libpthread). This support has been vastly improved and is
+much more complete and standard-compliant than it was before. It still isn't
+100% POSIX-compliant by any means, but it's a lot closer than it was. There is
+no guarantee that this will work with GCC's `--enable-threads=posix`, as that
+configuration is not tested/supported any longer in dc-chain.
+
 RELEASE NOTES for 2.1.1
 -----------------------
 
