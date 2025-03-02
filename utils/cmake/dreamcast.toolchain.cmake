@@ -7,7 +7,7 @@
 # This file is to be passed to CMake when compiling a regular CMake project
 # to cross-compile for the Dreamcast, using the KOS environment and settings.
 #
-#     cmake /path/to/src -DCMAKE_TOOLCHAIN_FILE=${KOS_BASE}/kos/utils/cmake/dreamcast.toolchain.cmake
+#     cmake /path/to/src -DCMAKE_TOOLCHAIN_FILE=${KOS_BASE}/kos/utils/cmake/${KOS_ARCH}.toolchain.cmake
 #
 #   or alternatively:
 #
