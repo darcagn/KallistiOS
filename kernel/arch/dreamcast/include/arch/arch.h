@@ -58,27 +58,6 @@ extern char _etext;
 /** \brief  Base address of available physical pages. */
 #define page_phys_base  0x8c010000
 
-#ifndef THD_SCHED_HZ
-/** \brief Scheduler interrupt frequency
-
-    Timer interrupt frequency for the KOS thread scheduler.
-
-    \note
-    This value is what KOS uses initially upon startup, but it can be
-    reconfigured at run-time.
-
-    \sa thd_get_hz(), thd_set_hz()
-*/
-#define THD_SCHED_HZ    100
-#endif
-
-/** Legacy symbol for scheduler frequency.
- *  \deprecated
- *  \sa THD_SCHED_HZ
- */
-static const
-unsigned HZ __depr("Please use the new THD_SCHED_HZ macro.") = THD_SCHED_HZ;
-
 /** \brief  Global symbol prefix in ELF files. */
 #define ELF_SYM_PREFIX      "_"
 

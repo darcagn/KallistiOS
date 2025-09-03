@@ -10,7 +10,7 @@
 
 	.text
 	.balign		4
-	.globl		_thd_block_now
+	.globl		_arch_thd_block_now
 
 ! Call this function to save the current task state (with one small
 ! exception -- PC will be moved forwards to the "restore" code) and
@@ -28,7 +28,7 @@
 ! No explicit return value, though R0 might be changed while the
 ! called is blocked. Returns when we are woken again later.
 !
-_thd_block_now:
+_arch_thd_block_now:
 	! There's no need to save R0-R7 since these are not guaranteed
 	! to persist across calls. So we'll put our temps down there
 	! and start at R8.

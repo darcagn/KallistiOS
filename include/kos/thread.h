@@ -41,6 +41,7 @@ __BEGIN_DECLS
 #include <kos/cdefs.h>
 #include <kos/tls.h>
 #include <arch/irq.h>
+#include <arch/thread.h>
 #include <arch/types.h>
 
 #include <sys/queue.h>
@@ -111,6 +112,19 @@ __BEGIN_DECLS
     directory (including NULL terminator).
 */
 #define KTHREAD_PWD_SIZE    256
+
+/** \brief Scheduler interrupt frequency
+
+    Timer interrupt frequency for the KOS thread scheduler, defined
+    differently by each arch.
+
+    \note
+    This value is what KOS uses initially upon startup, but it can be
+    reconfigured at run-time.
+
+    \sa thd_get_hz(), thd_set_hz()
+*/
+#define THD_SCHED_HZ    ARCH_THD_SCHED_HZ
 
 /* Pre-define list/queue types */
 struct kthread;
@@ -325,7 +339,9 @@ extern kthread_t *thd_current;
 
     \return                 Whatever the unblocker deems necessary to return.
 */
-int thd_block_now(irq_context_t *mycxt);
+static inline int thd_block_now(irq_context_t *mycxt) {
+    return arch_thd_block_now(mycxt);
+}
 
 /** \brief   Find a new thread to swap in.
 
