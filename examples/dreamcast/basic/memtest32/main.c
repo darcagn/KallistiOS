@@ -29,6 +29,7 @@
 
 #include <kos/init.h>
 #include <arch/arch.h>
+#include <dc/hw.h>
 
 #include "memtest.h"
 
@@ -58,9 +59,9 @@ int main(int argc, char **argv) {
     printf("\nThis console has %ld bytes of system memory,\n with top of "
            "memory located at 0x%0lx.\n\n", HW_MEMSIZE, _arch_mem_top);
 
-    /* The DBL_MEM boolean macro is provided as an easy, concise
+    /* The HW_DBL_MEM boolean macro is provided as an easy, concise
      * way to determine if extra system RAM is available */
-    num_bytes = DBL_MEM ? NUM_BYTES_32 : NUM_BYTES_16;
+    num_bytes = HW_DBL_MEM ? NUM_BYTES_32 : NUM_BYTES_16;
 
     printf("Beginning memtest routine...\n");
     printf(" Base address: %p\n", BASE_ADDRESS);

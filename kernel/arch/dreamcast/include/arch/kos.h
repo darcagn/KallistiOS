@@ -38,6 +38,7 @@ __BEGIN_DECLS
 #include <dc/fs_vmu.h>
 #include <dc/g1ata.h>
 #include <dc/g2bus.h>
+#include <dc/hw.h>
 #include <dc/maple.h>
 #include <dc/maple/controller.h>
 #include <dc/maple/dreameye.h>

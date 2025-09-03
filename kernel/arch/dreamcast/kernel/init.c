@@ -20,6 +20,7 @@
 #include <arch/memory.h>
 #include <arch/rtc.h>
 #include <arch/timer.h>
+#include <dc/hw.h>
 #include <dc/perfctr.h>
 #include <dc/ubc.h>
 #include <dc/pvr.h>

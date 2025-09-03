@@ -30,7 +30,7 @@
 #include <stdnoreturn.h>
 
 /* Number of threads to spawn */
-#define THREAD_COUNT     (DBL_MEM? 600 : 300)
+#define THREAD_COUNT     (HW_DBL_MEM? 600 : 300)
  
 /* % chance thread will pass when maybe_pass() called */
 #define THREAD_PASS_CHANCE 75

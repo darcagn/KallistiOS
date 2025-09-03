@@ -19,11 +19,12 @@
 
 #include <arch/arch.h>
 #include <arch/spinlock.h>
+#include <dc/hw.h>
 #include <dc/maple.h>
 #include <dc/maple/controller.h>
 
 #define UNUSED __attribute__((unused))
-#define THD_COUNT (475 * (DBL_MEM? 2 : 1))
+#define THD_COUNT (475 * (HW_DBL_MEM? 2 : 1))
 
 static kthread_once_t once = KTHREAD_ONCE_INIT;
 static spinlock_t lock = SPINLOCK_INITIALIZER;
