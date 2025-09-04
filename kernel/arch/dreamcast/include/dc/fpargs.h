@@ -1,11 +1,11 @@
 /* KallistiOS ##version##
 
-   arch/dreamcast/include/arch/args.h
+   arch/dreamcast/include/dc/fpargs.h
    Copyright (C) 2023 Paul Cercueil <paul@crapouillou.net>
 
 */
 
-/** \file   arch/args.h
+/** \file   dc/fpargs.h
     \brief  Macros for getting argument registers in inline assembly
 
     This file contains the KOS_FPARG(n) macro, which resolves to the register
@@ -14,8 +14,8 @@
     \author Paul Cercueil
 */
 
-#ifndef __ARCH_ARGS_H
-#define __ARCH_ARGS_H
+#ifndef __DC_FPARGS_H
+#define __DC_FPARGS_H
 
 #include <kos/cdefs.h>
 __BEGIN_DECLS
@@ -55,4 +55,4 @@ __BEGIN_DECLS
 
 __END_DECLS
 
-#endif /* __ARCH_ARGS_H */
+#endif /* __DC_FPARGS_H */
