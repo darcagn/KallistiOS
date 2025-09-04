@@ -1,11 +1,11 @@
 /* KallistiOS ##version##
 
-   arch/dreamcast/include/arch/trap.h
+   arch/dreamcast/include/dc/trap.h
    Copyright (C) 2024 Falco Girgis
 
 */
 
-/** \file    arch/trap.h
+/** \file    dc/trap.h
     \brief   Interrupt and exception handling.
     \ingroup traps
 
@@ -22,8 +22,8 @@
         - document reserved TRAP codes
 */
 
-#ifndef __ARCH_TRAP_H
-#define __ARCH_TRAP_H
+#ifndef __DC_TRAP_H
+#define __DC_TRAP_H
 
 #include <stdint.h>
 
@@ -95,4 +95,4 @@ trapa_handler trapa_get_handler(trapa_t code, void **data);
 
 __END_DECLS
 
-#endif /* __ARCH_TRAP_H */
+#endif /* __DC_TRAP_H */

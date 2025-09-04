@@ -61,6 +61,7 @@ __BEGIN_DECLS
 #include <dc/sound/sfxmgr.h>
 #include <dc/spu.h>
 #include <dc/sq.h>
+#include <dc/trap.h>
 #include <dc/ubc.h>
 #include <dc/vblank.h>
 #include <dc/vec3f.h>
