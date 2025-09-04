@@ -1,11 +1,11 @@
 /* KallistiOS ##version##
 
-   arch/dreamcast/include/arch/mmu.h
+   kernel/arch/dreamcast/include/dc/mmu.h
    Copyright (C) 2001 Megan Potter
 
 */
 
-/** \file    arch/mmu.h
+/** \file    dc/mmu.h
     \brief   Memory Management Unit and Translation Lookaside Buffer handling.
     \ingroup mmu
 
@@ -42,8 +42,8 @@
     \author Megan Potter
 */
 
-#ifndef __ARCH_MMU_H
-#define __ARCH_MMU_H
+#ifndef __DC_MMU_H
+#define __DC_MMU_H
 
 #include <kos/cdefs.h>
 __BEGIN_DECLS
@@ -137,7 +137,7 @@ typedef enum page_size {
     The TLB entries on the SH4 are a single 32-bit dword in length. We store
     some other data here too for ease of use.
 
-    \headerfile arch/mmu.h
+    \headerfile dc/mmu.h
 */
 typedef struct mmupage {
     /* Explicit pieces, used for reference */
@@ -168,7 +168,7 @@ typedef struct mmupage {
     We have two-level page tables on SH4, and each sub-context contains 512
     entries.
 
-    \headerfile arch/mmu.h
+    \headerfile dc/mmu.h
 */
 typedef struct mmusubcontext {
     mmupage_t   page[MMU_SUB_PAGES];    /**< \brief 512 page entries */
@@ -183,7 +183,7 @@ typedef struct mmusubcontext {
     This type is the top-level context that makes up the page table. There is
     one of these, with 1024 sub-contexts.
 
-    \headerfile arch/mmu.h
+    \headerfile dc/mmu.h
 */
 typedef struct mmucontext {
     mmusubcontext_t *sub[MMU_PAGES];    /**< \brief 1024 sub-contexts */
@@ -431,4 +431,4 @@ void mmu_set_sq_addr(void *addr);
 
 __END_DECLS
 
-#endif  /* __ARCH_MMU_H */
+#endif  /* __DC_MMU_H */

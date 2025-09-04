@@ -23,7 +23,6 @@
 __BEGIN_DECLS
 
 #include <arch/gdb.h>
-#include <arch/mmu.h>
 #include <arch/memory.h>
 
 #include <dc/asic.h>
@@ -49,6 +48,7 @@ __BEGIN_DECLS
 #include <dc/maple/vmu.h>
 #include <dc/matrix3d.h>
 #include <dc/matrix.h>
+#include <dc/mmu.h>
 #include <dc/modem/modem.h>
 #include <dc/net/broadband_adapter.h>
 #include <dc/net/lan_adapter.h>

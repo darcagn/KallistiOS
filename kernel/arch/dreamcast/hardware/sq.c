@@ -11,7 +11,7 @@
 #include <assert.h>
 
 #include <arch/cache.h>
-#include <arch/mmu.h>
+#include <dc/mmu.h>
 #include <dc/sq.h>
 #include <kos/dbglog.h>
 #include <kos/mutex.h>
