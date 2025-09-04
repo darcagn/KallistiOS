@@ -13,11 +13,11 @@
 
 #include <arch/cache.h>
 #include <arch/timer.h>
-#include <arch/memory.h>
 #include <arch/irq.h>
 
 #include <dc/asic.h>
 #include <dc/cdrom.h>
+#include <dc/memory.h>
 #include <dc/g1ata.h>
 #include <dc/syscalls.h>
 #include <dc/vblank.h>

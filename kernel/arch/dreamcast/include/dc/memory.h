@@ -1,11 +1,11 @@
 /* KallistiOS ##version##
 
-   kernel/arch/dreamcast/include/arch/memory.h
+   kernel/arch/dreamcast/include/dc/memory.h
    Copyright (C) 2023 Donald Haase
 
 */
 
-/** \file    arch/memory.h
+/** \file    dc/memory.h
     \brief   Constants for areas of the system memory map.
     \ingroup memory
 
@@ -17,8 +17,8 @@
     \author Donald Haase
 */
 
-#ifndef __ARCH_MEMORY_H
-#define __ARCH_MEMORY_H
+#ifndef __DC_MEMORY_H
+#define __DC_MEMORY_H
 
 #include <kos/cdefs.h>
 __BEGIN_DECLS
@@ -215,7 +215,7 @@ __BEGIN_DECLS
     \brief MMU Control Registers
     \ingroup sh4_cr_regs
 
-    \see arch\mmu.h
+    \see dc\mmu.h
 
     These are registers for controlling the MMU as defined in table 3.1
     of Hitatchi SH7750 Series Hardware Manual rev 6.0, titled "MMU Registers".
@@ -362,4 +362,4 @@ __BEGIN_DECLS
 
 __END_DECLS
 
-#endif /* __ARCH_MEMORY_H */
+#endif /* __DC_MEMORY_H */

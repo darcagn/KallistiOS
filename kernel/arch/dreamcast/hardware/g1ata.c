@@ -9,6 +9,7 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include <dc/memory.h>
 #include <dc/g1ata.h>
 #include <dc/asic.h>
 
@@ -20,7 +21,6 @@
 #include <arch/timer.h>
 #include <arch/cache.h>
 #include <arch/irq.h>
-#include <arch/memory.h>
 
 /*
    This file implements support for accessing devices over the G1 bus by the

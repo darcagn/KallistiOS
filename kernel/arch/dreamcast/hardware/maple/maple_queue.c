@@ -9,8 +9,8 @@
 #include <assert.h>
 #include <string.h>
 #include <dc/maple.h>
+#include <dc/memory.h>
 #include <arch/irq.h>
-#include <arch/memory.h>
 
 /* Send all queued frames */
 void maple_queue_flush(void) {

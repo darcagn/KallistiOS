@@ -5,8 +5,8 @@
 */
 
 #include <dc/ubc.h>
+#include <dc/memory.h>
 
-#include <arch/memory.h>
 #include <arch/irq.h>
 
 #include <kos/dbglog.h>

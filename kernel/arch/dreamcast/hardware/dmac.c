@@ -7,11 +7,11 @@
 #include <arch/cache.h>
 #include <arch/dmac.h>
 #include <arch/irq.h>
-#include <arch/memory.h>
 #include <kos/dbglog.h>
 #include <kos/genwait.h>
 #include <kos/platform.h>
 #include <kos/regfield.h>
+#include <dc/memory.h>
 
 #include <errno.h>
 

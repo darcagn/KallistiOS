@@ -22,8 +22,8 @@
 #include <kos/cdefs.h>
 __BEGIN_DECLS
 
-#include <arch/memory.h>
 #include <dc/g2bus.h>
+#include <dc/memory.h>
 
 /** \addtogroup audio_driver
     @{

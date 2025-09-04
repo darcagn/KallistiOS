@@ -18,10 +18,10 @@
 #include <kos/platform.h>
 #include <arch/arch.h>
 #include <arch/irq.h>
-#include <arch/memory.h>
 #include <arch/rtc.h>
 #include <arch/timer.h>
 #include <dc/hw.h>
+#include <dc/memory.h>
 #include <dc/perfctr.h>
 #include <dc/ubc.h>
 #include <dc/pvr.h>

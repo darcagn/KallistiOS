@@ -13,11 +13,11 @@
 #include <arch/arch.h>
 #include <arch/types.h>
 #include <arch/irq.h>
-#include <arch/memory.h>
 #include <kos/dbgio.h>
 #include <kos/mm.h>
 #include <kos/regfield.h>
 #include <arch/cache.h>
+#include <dc/memory.h>
 #include <dc/mmu.h>
 
 #define MMU_TOP_MASK GENMASK(30, 21)            /**< \brief Top-level mask */

@@ -7,8 +7,8 @@
 
 #include <stdio.h>
 
+#include <dc/memory.h>
 #include <dc/syscalls.h>
-#include <arch/memory.h>
 
 /*
     This module along with syscall_font.s contains functions for accessing 

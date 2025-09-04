@@ -42,8 +42,8 @@
 __BEGIN_DECLS
 
 #include <stdint.h>
-#include <arch/memory.h>
 #include <arch/cache.h>
+#include <dc/memory.h>
 
 /** \brief   Mask dest to Store Queue area as address
     \ingroup store_queues
