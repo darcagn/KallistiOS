@@ -16,6 +16,7 @@
 #include <arch/memory.h>
 #include <arch/mmu.h>
 #include <kos/dbgio.h>
+#include <kos/mm.h>
 #include <kos/regfield.h>
 #include <arch/cache.h>
 
@@ -272,7 +273,7 @@ static void mmu_page_map_single(mmucontext_t *context,
     page->valid = 1;
 
     page->pteh = BUILD_PTEH(virtpage, 0);
-    page->ptel = BUILD_PTEL(page->physical << PAGESIZE_BITS, 1, 1, page->prkey,
+    page->ptel = BUILD_PTEL(page->physical << MM_PAGE_SIZE_BITS, 1, 1, page->prkey,
                             page->cache, page->dirty, page->shared, page->wthru);
 }
 
@@ -300,10 +301,10 @@ void sc_mmu_mmap(uint32_t dst, size_t len, uint32_t src) {
     int anon = 0;
 
     /* Adjust length to page boundary */
-    if(len & PAGEMASK)
-        len = (len & ~PAGEMASK) + PAGESIZE;
+    if(len & MM_PAGE_MASK)
+        len = (len & ~MM_PAGE_MASK) + MM_PAGE_SIZE;
 
-    len >>= PAGESIZE_BITS;
+    len >>= MM_PAGE_SIZE_BITS;
 
     /* If no src pointer, then allocate anonymous pages */
     if(!src) {
@@ -317,10 +318,10 @@ void sc_mmu_mmap(uint32_t dst, size_t len, uint32_t src) {
 
     /* Do the actual mapping */
     /*dbgio_printf("sc: mmu_page_map(%08x,%08x,%08x,%08x,%d,%d,%d,%d)\n",
-        proc_current->pt, dst >> PAGESIZE_BITS, src >> PAGESIZE_BITS, len,
+        proc_current->pt, dst >> MM_PAGE_SIZE_BITS, src >> MM_PAGE_SIZE_BITS, len,
         MMU_ALL_RDWR, anon ? MMU_CACHEABLE : MMU_NO_CACHE, MMU_SHARED, MMU_DIRTY); */
     mmu_page_map(proc_current->pt,
-                 dst >> PAGESIZE_BITS, src >> PAGESIZE_BITS, len,
+                 dst >> MM_PAGE_SIZE_BITS, src >> MM_PAGE_SIZE_BITS, len,
                  MMU_ALL_RDWR,
                  anon ? MMU_CACHEABLE : MMU_NO_CACHE,
                  MMU_NOT_SHARED,
@@ -346,12 +347,12 @@ int mmu_copyin(mmucontext_t *context, uint32_t srcaddr, uint32_t srccnt, void *b
     srcptr = (uint32_t)srcaddr;
 
     if(!(srcptr & 0x8000000)) {
-        srcpage = map_virt(context, srcptr >> PAGESIZE_BITS);
+        srcpage = map_virt(context, srcptr >> MM_PAGE_SIZE_BITS);
 
         if(srcpage == NULL)
             arch_panic("mmu_copyv with invalid source page");
 
-        src = (srcpage->physical << PAGESIZE_BITS) | (srcptr & PAGEMASK);
+        src = (srcpage->physical << MM_PAGE_SIZE_BITS) | (srcptr & MM_PAGE_MASK);
         srckrn = 0;
     }
     else {
@@ -369,7 +370,7 @@ int mmu_copyin(mmucontext_t *context, uint32_t srcaddr, uint32_t srccnt, void *b
         /* Determine the largest run we can get away with */
 
         /* What's left of source page */
-        run = PAGESIZE - (srcptr & PAGEMASK);
+        run = MM_PAGE_SIZE - (srcptr & MM_PAGE_MASK);
 
         /* What's left of source count */
         if(srccnt < run)
@@ -386,14 +387,14 @@ int mmu_copyin(mmucontext_t *context, uint32_t srcaddr, uint32_t srccnt, void *b
         /* Check for overruns */
         srccnt -= run;
 
-        if(!srckrn && (srcptr & ~PAGEMASK) != ((srcptr - run) & ~PAGEMASK)) {
-            srcpage = map_virt(context, srcptr >> PAGESIZE_BITS);
+        if(!srckrn && (srcptr & ~MM_PAGE_MASK) != ((srcptr - run) & ~MM_PAGE_MASK)) {
+            srcpage = map_virt(context, srcptr >> MM_PAGE_SIZE_BITS);
 
             if(srcpage == NULL)
                 arch_panic("mmu_copyv with invalid source page (in loop)");
 
-            src = (srcpage->physical << PAGESIZE_BITS)
-                  | (srcptr - (srcptr & ~PAGEMASK));
+            src = (srcpage->physical << MM_PAGE_SIZE_BITS)
+                  | (srcptr - (srcptr & ~MM_PAGE_MASK));
         }
 
         copied += run;
@@ -428,12 +429,12 @@ int mmu_copyv(mmucontext_t *context1, struct iovec *iov1, int iovcnt1,
     srcptr = (uint32_t)iov1[srciov].iov_base;
 
     if(!(srcptr & 0x80000000)) {
-        srcpage = map_virt(context1, srcptr >> PAGESIZE_BITS);
+        srcpage = map_virt(context1, srcptr >> MM_PAGE_SIZE_BITS);
 
         if(srcpage == NULL)
             arch_panic("mmu_copyv with invalid source page");
 
-        src = (srcpage->physical << PAGESIZE_BITS) | (srcptr & PAGEMASK);
+        src = (srcpage->physical << MM_PAGE_SIZE_BITS) | (srcptr & MM_PAGE_MASK);
         srckrn = 0;
     }
     else {
@@ -447,12 +448,12 @@ int mmu_copyv(mmucontext_t *context1, struct iovec *iov1, int iovcnt1,
     dstptr = (uint32_t)iov2[dstiov].iov_base;
 
     if(!(dstptr & 0x80000000)) {
-        dstpage = map_virt(context2, dstptr >> PAGESIZE_BITS);
+        dstpage = map_virt(context2, dstptr >> MM_PAGE_SIZE_BITS);
 
         if(dstpage == NULL)
             arch_panic("mmu_copyv with invalid destination page");
 
-        dst = (dstpage->physical << PAGESIZE_BITS) | (dstptr & PAGEMASK);
+        dst = (dstpage->physical << MM_PAGE_SIZE_BITS) | (dstptr & MM_PAGE_MASK);
         dstkrn = 0;
     }
     else {
@@ -467,11 +468,11 @@ int mmu_copyv(mmucontext_t *context1, struct iovec *iov1, int iovcnt1,
         /* Determine the largest run we can get away with */
 
         /* What's left of source page */
-        run = PAGESIZE - (srcptr & PAGEMASK);
+        run = MM_PAGE_SIZE - (srcptr & MM_PAGE_MASK);
 
         /* What's left of destination page */
-        if((PAGESIZE - (dstptr & PAGEMASK)) < run)
-            run = PAGESIZE - (dstptr & PAGEMASK);
+        if((MM_PAGE_SIZE - (dstptr & MM_PAGE_MASK)) < run)
+            run = MM_PAGE_SIZE - (dstptr & MM_PAGE_MASK);
 
         /* What's left of source iov */
         if(srccnt < run)
@@ -516,26 +517,26 @@ int mmu_copyv(mmucontext_t *context1, struct iovec *iov1, int iovcnt1,
             srcptr = (uint32_t)iov1[srciov].iov_base;
 
             if(!srckrn) {
-                srcpage = map_virt(context1, srcptr >> PAGESIZE_BITS);
+                srcpage = map_virt(context1, srcptr >> MM_PAGE_SIZE_BITS);
 
                 if(srcpage == NULL)
                     arch_panic("mmu_copyv with invalid source page (in loop)");
 
-                src = (srcpage->physical << PAGESIZE_BITS) | (srcptr & PAGEMASK);
+                src = (srcpage->physical << MM_PAGE_SIZE_BITS) | (srcptr & MM_PAGE_MASK);
             }
             else {
                 src = srcptr;
             }
         }
         else {
-            if(!srckrn && (srcptr & ~PAGEMASK) != ((srcptr - run) & ~PAGEMASK)) {
-                srcpage = map_virt(context1, srcptr >> PAGESIZE_BITS);
+            if(!srckrn && (srcptr & ~MM_PAGE_MASK) != ((srcptr - run) & ~MM_PAGE_MASK)) {
+                srcpage = map_virt(context1, srcptr >> MM_PAGE_SIZE_BITS);
 
                 if(srcpage == NULL)
                     arch_panic("mmu_copyv with invalid source page (in loop)");
 
-                src = (srcpage->physical << PAGESIZE_BITS)
-                      | (srcptr - (srcptr & ~PAGEMASK));
+                src = (srcpage->physical << MM_PAGE_SIZE_BITS)
+                      | (srcptr - (srcptr & ~MM_PAGE_MASK));
             }
         }
 
@@ -550,26 +551,26 @@ int mmu_copyv(mmucontext_t *context1, struct iovec *iov1, int iovcnt1,
             dstptr = (uint32_t)iov2[dstiov].iov_base;
 
             if(!dstkrn) {
-                dstpage = map_virt(context2, dstptr >> PAGESIZE_BITS);
+                dstpage = map_virt(context2, dstptr >> MM_PAGE_SIZE_BITS);
 
                 if(dstpage == NULL)
                     arch_panic("mmu_copyv with invalid destination page (in loop)");
 
-                dst = (dstpage->physical << PAGESIZE_BITS) | (dstptr & PAGEMASK);
+                dst = (dstpage->physical << MM_PAGE_SIZE_BITS) | (dstptr & MM_PAGE_MASK);
             }
             else {
                 dst = dstptr;
             }
         }
         else {
-            if(!dstkrn && (dstptr & ~PAGEMASK) != ((dstptr - run) & ~PAGEMASK)) {
-                dstpage = map_virt(context2, dstptr >> PAGESIZE_BITS);
+            if(!dstkrn && (dstptr & ~MM_PAGE_MASK) != ((dstptr - run) & ~MM_PAGE_MASK)) {
+                dstpage = map_virt(context2, dstptr >> MM_PAGE_SIZE_BITS);
 
                 if(dstpage == NULL)
                     arch_panic("mmu_copyv with invalid destination page (in loop)");
 
-                dst = (dstpage->physical << PAGESIZE_BITS)
-                      | (dstptr - (dstptr & ~PAGEMASK));
+                dst = (dstpage->physical << MM_PAGE_SIZE_BITS)
+                      | (dstptr - (dstptr & ~MM_PAGE_MASK));
             }
         }
     }
@@ -639,7 +640,7 @@ void mmu_gen_tlb_miss(const char *what, irq_t source, irq_context_t *context) {
     }
 
     /* Translate it to the proper physical address */
-    page = map_func(mmu_cxt_current, addr >> PAGESIZE_BITS);
+    page = map_func(mmu_cxt_current, addr >> MM_PAGE_SIZE_BITS);
 
     if(!page) {
         dbgio_printf("%s: cannot map virtual address %08lx\n", what, addr);
@@ -656,11 +657,11 @@ void mmu_gen_tlb_miss(const char *what, irq_t source, irq_context_t *context) {
 
     /* Load the mapping */
     //dbgio_printf("asid %d: loading up mapping %08x -> %08x, prkey=%d into %x\n",
-    //  proc_current->pt->asid, *tea, page->physical << PAGESIZE_BITS, page->prkey, last_urc);
+    //  proc_current->pt->asid, *tea, page->physical << MM_PAGE_SIZE_BITS, page->prkey, last_urc);
     ptehv = page->pteh | mmu_cxt_current->asid;
     ptelv = page->ptel;
     mmu_ldtlb_quick(ptehv, ptelv);
-    /* mmu_ldtlb(mmu_cxt_current->asid, *tea, page->physical << PAGESIZE_BITS, 1, page->prkey,
+    /* mmu_ldtlb(mmu_cxt_current->asid, *tea, page->physical << MM_PAGE_SIZE_BITS, 1, page->prkey,
         page->cache, page->dirty, page->shared, page->wthru);
     mmu_ldtlb_wait(); */
 }

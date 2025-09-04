@@ -9,7 +9,7 @@
    build flag.
 */
 
-#include <arch/arch.h>
+#include <kos/mm.h>
 #include <arch/cache.h>
 #include <arch/irq.h>
 #include <arch/spinlock.h>
@@ -115,7 +115,7 @@ ATOMIC_FETCH_NAND_N_(unsigned long long, 8)
 /* Locks have to be shared for each page with the MMU enabled,
    otherwise we can fail when aliasing an address range to multiple
    pages. */
-#define GENERIC_LOCK_COUNT          (PAGESIZE / GENERIC_LOCK_BLOCK_SIZE)
+#define GENERIC_LOCK_COUNT          (MM_PAGE_SIZE / GENERIC_LOCK_BLOCK_SIZE)
 
 /* Create a hash table mapping a region of memory to a lock. */
 static spinlock_t locks[GENERIC_LOCK_COUNT] = {

@@ -21,6 +21,8 @@
 #include <kos/cdefs.h>
 __BEGIN_DECLS
 
+#include <kos/mm.h>
+
 /** \defgroup hw_memsizes           Memory Capacity
     \brief                          Console memory sizes
     \ingroup                        arch
@@ -39,14 +41,14 @@ __BEGIN_DECLS
 
     \return The total size of system memory in bytes.
 */
-#define HW_MEMSIZE (_arch_mem_top - 0x8c000000)
+#define HW_MEMSIZE (MM_MEM_TOP - 0x8c000000)
 
 /** \brief   Use this macro to easily determine if system has 32MB of RAM.
     \ingroup arch
 
     \return Non-zero if console has 32MB of RAM, zero otherwise
 */
-#define HW_DBL_MEM (_arch_mem_top - 0x8d000000)
+#define HW_DBL_MEM (MM_MEM_TOP - 0x8d000000)
 
 /** \brief   Initialize bare-bones hardware systems.
     \ingroup arch

@@ -18,6 +18,7 @@
 #include <errno.h>
 #include <stdalign.h>
 
+#include <kos/mm.h>
 #include <kos/thread.h>
 #include <kos/dbgio.h>
 #include <kos/dbglog.h>
@@ -1013,7 +1014,7 @@ int kthread_key_delete(kthread_key_t key) {
 int thd_init(void) {
     const kthread_attr_t kern_attr = {
         .stack_size = THD_KERNEL_STACK_SIZE,
-        .stack_ptr  = (void *)_arch_mem_top - THD_KERNEL_STACK_SIZE,
+        .stack_ptr  = (void *)MM_MEM_TOP - THD_KERNEL_STACK_SIZE,
         .label      = "[kernel]"
     };
 

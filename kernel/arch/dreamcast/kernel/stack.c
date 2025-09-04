@@ -10,7 +10,7 @@
    traces. */
 
 #include <kos/dbgio.h>
-#include <arch/arch.h>
+#include <kos/mm.h>
 #include <arch/stack.h>
 #include <stdint.h>
 
@@ -44,7 +44,7 @@ void arch_stk_trace_at(uint32_t fp, size_t n) {
 
     while(fp != 0xffffffff) {
         /* Validate the function pointer (fp) */
-        if((fp & 3) || (fp < 0x8c000000) || (fp > _arch_mem_top)) {
+        if((fp & 3) || (fp < 0x8c000000) || (fp > MM_MEM_TOP)) {
             dbgio_printf("   %08lx   (invalid frame pointer)\n", fp);
             break;
         }
@@ -54,7 +54,7 @@ void arch_stk_trace_at(uint32_t fp, size_t n) {
             ret_addr = arch_fptr_ret_addr(fp);
 
             /* Validate the return address */
-            if(!arch_valid_address(ret_addr)) {
+            if(!mm_valid_address(ret_addr)) {
                 dbgio_printf("   %08lx   (invalid return address)\n", ret_addr);
                 break;
             } else
@@ -67,4 +67,3 @@ void arch_stk_trace_at(uint32_t fp, size_t n) {
 
     dbgio_printf("-------------- End Stack Trace -----------------\n");
 }
-

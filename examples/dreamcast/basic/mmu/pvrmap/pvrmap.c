@@ -28,7 +28,7 @@ int main(int argc, char **argv) {
     mmu_switch_context(cxt);
 
     /* Map the PVR video memory to 0 */
-    mmu_page_map(cxt, 0, 0x05000000 >> PAGESIZE_BITS, (8 * 1024 * 1024) >> PAGESIZE_BITS,
+    mmu_page_map(cxt, 0, 0x05000000 >> MM_PAGE_SIZE_BITS, (8 * 1024 * 1024) >> MM_PAGE_SIZE_BITS,
                  MMU_ALL_RDWR, MMU_NO_CACHE, 0, 1);
 
     /* Draw a nice pattern to the NULL space */

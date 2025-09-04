@@ -13,11 +13,11 @@
 
 /* Note: right now we only support system RAM */
 
-#include <arch/arch.h>
 #include <arch/types.h>
 #include <arch/irq.h>
 #include <arch/stack.h>
 #include <kos/dbglog.h>
+#include <kos/mm.h>
 #include <errno.h>
 #include <stdio.h>
 
@@ -28,7 +28,7 @@ extern unsigned long end;
 static void *sbrk_base;
 
 /* MM-wide initialization */
-int mm_init(void) {
+int arch_mm_init(void) {
     int base = (int)(&end);
     base = (base / 4) * 4 + 4;  /* longword align */
     sbrk_base = (void*)base;
@@ -37,7 +37,7 @@ int mm_init(void) {
 }
 
 /* Simple sbrk function */
-void* mm_sbrk(unsigned long increment) {
+void* arch_mm_sbrk(unsigned long increment) {
     int old;
     void *base = sbrk_base;
 
@@ -48,7 +48,7 @@ void* mm_sbrk(unsigned long increment) {
 
     sbrk_base = (void *)(increment + (unsigned long)sbrk_base);
 
-    if(((uint32)sbrk_base) >= (_arch_mem_top - THD_KERNEL_STACK_SIZE)) {
+    if(((uint32)sbrk_base) >= (MM_MEM_TOP - THD_KERNEL_STACK_SIZE)) {
         dbglog(DBG_CRITICAL, "Out of memory. Requested sbrk_base %p, was %p, diff %lu\n",
                sbrk_base, base, increment);
         sbrk_base = base;  /* Restore old value and mark failed */

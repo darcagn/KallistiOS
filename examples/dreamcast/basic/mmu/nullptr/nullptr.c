@@ -16,7 +16,7 @@ KOS_INIT_FLAGS(INIT_DEFAULT | INIT_MALLOCSTATS);
 
 mmupage_t * catchnull(mmucontext_t *, int vp) {
     printf("Caught us trying to use a bad pointer!\n");
-    printf("The pointer page was %08x\n", vp << PAGESIZE_BITS);
+    printf("The pointer page was %08x\n", vp << MM_PAGE_SIZE_BITS);
     printf("The address of the attempt was %08lx\n",
            CONTEXT_PC(thd_current->context));
     return NULL;

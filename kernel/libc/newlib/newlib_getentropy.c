@@ -10,7 +10,7 @@
 #include <unistd.h>
 #include <sys/time.h>
 
-#include <arch/arch.h>
+#include <kos/mm.h>
 
 /* We provide getentropy() if using Newlib < 4.4.0 */
 #if __NEWLIB__ < 4 || (__NEWLIB__ == 4 && __NEWLIB_MINOR__ < 4)
@@ -23,7 +23,7 @@ int _getentropy_r(void *re, void *ptr, size_t len) {
 #endif
     const int block_size = 128;
     struct timeval tv;
-    uint8_t *src = ((uint8_t *)_arch_mem_top);
+    uint8_t *src = ((uint8_t *)MM_MEM_TOP);
     uint8_t *dst = ptr;
     size_t i;
     int j;

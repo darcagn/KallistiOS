@@ -14,6 +14,7 @@
 #include <kos/dbgio.h>
 #include <kos/dbglog.h>
 #include <kos/init.h>
+#include <kos/mm.h>
 #include <kos/platform.h>
 #include <arch/arch.h>
 #include <arch/irq.h>

@@ -120,4 +120,3 @@ void rtc_shutdown(void);
 __END_DECLS
 
 #endif  /* __ARCH_RTC_H */
-

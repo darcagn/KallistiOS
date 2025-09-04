@@ -21,9 +21,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <arch/spinlock.h>
-#include <arch/arch.h>
 
 #include <kos/dbglog.h>
+#include <kos/mm.h>
 #include <kos/opts.h>
 
 #undef DEBUG
@@ -38,7 +38,7 @@
 /* KOS specific things */
 #define USE_MALLOC_LOCK
 #define HAVE_MMAP 0
-#define malloc_getpagesize PAGESIZE
+#define malloc_getpagesize MM_PAGE_SIZE
 #define HAVE_USR_INCLUDE_MALLOC_H
 
 /* Enable thread locking. Because mutexes actually require malloc themselves,

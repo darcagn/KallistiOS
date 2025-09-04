@@ -32,32 +32,6 @@ __BEGIN_DECLS
     @{
 */
 
-/** \brief  Top of memory available, depending on memory size. */
-#if defined(__KOS_GCC_32MB__) || __KOS_GCC_PATCHLEVEL__ >= 2025062800
-extern uint32 _arch_mem_top;
-#else
-#pragma message "Outdated toolchain: not patched for 32MB support, limiting "\
-    "KOS to 16MB-only behavior to retain maximum compatibility. Please "\
-    "update your toolchain."
-#define _arch_mem_top   ((uint32) 0x8d000000)
-#endif
-
-/** \brief  Start and End address for .text portion of program. */
-extern char _executable_start;
-extern char _etext;
-
-#define PAGESIZE        4096            /**< \brief Page size (for MMU) */
-#define PAGESIZE_BITS   12              /**< \brief Bits for page size */
-#define PAGEMASK        (PAGESIZE - 1)  /**< \brief Mask for page offset */
-
-/** \brief  Page count "variable".
-
-    The number of pages is static, so we can optimize this quite a bit. */
-#define page_count      ((_arch_mem_top - page_phys_base) / PAGESIZE)
-
-/** \brief  Base address of available physical pages. */
-#define page_phys_base  0x8c010000
-
 /** \brief  Global symbol prefix in ELF files. */
 #define ELF_SYM_PREFIX      "_"
 
@@ -143,23 +117,6 @@ void arch_reboot(void) __noreturn;
 */
 void arch_menu(void) __noreturn;
 
-/* These are in mm.c */
-/** \brief   Initialize the memory management system.
-    \ingroup arch
-
-    \retval 0               On success (no error conditions defined).
-*/
-int mm_init(void);
-
-/** \brief   Request more core memory from the system.
-    \ingroup arch
-
-    \param  increment       The number of bytes requested.
-    \return                 A pointer to the memory.
-    \note                   This function will panic if no memory is available.
-*/
-void * mm_sbrk(unsigned long increment);
-
 /* Bring in the init flags for compatibility with old code that expects them
    here. */
 #include <kos/init.h>
@@ -180,28 +137,6 @@ void arch_real_exit(int ret_code) __noreturn;
 */
 static inline void arch_sleep(void) {
     __asm__ __volatile__("sleep\n");
-}
-
-/** \brief   Returns true if the passed address is likely to be valid. Doesn't
-             have to be exact, just a sort of general idea.
-    \ingroup arch
-
-    \return                 Whether the address is valid or not for normal
-                            memory access.
-*/
-static inline bool arch_valid_address(uintptr_t ptr) {
-    return ptr >= 0x8c010000 && ptr < _arch_mem_top;
-}
-
-/** \brief   Returns true if the passed address is in the text section of your
-             program.
-    \ingroup arch
-
-    \return                 Whether the address is valid or not for text
-                            memory access.
-*/
-static inline bool arch_valid_text_address(uintptr_t ptr) {
-    return ptr >= (uintptr_t)&_executable_start && ptr < (uintptr_t)&_etext;
 }
 
 __END_DECLS

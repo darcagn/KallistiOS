@@ -5,9 +5,9 @@
    Copyright (C) 2025 Eric Fradella
 */
 
-#include <arch/arch.h>
 #include <arch/cache.h>
 #include <sys/uio.h>
+#include <kos/mm.h>
 #include <kos/netcfg.h>
 #include <kos/fs.h>
 #include <kos/thread.h>
@@ -49,7 +49,7 @@ long sysconf(int name) {
             return _POSIX_THREAD_CPUTIME;
 
         case _SC_PAGESIZE:
-            return PAGESIZE;
+            return MM_PAGE_SIZE;
 
         case _SC_LEVEL1_ICACHE_SIZE:
             return CACHE_L1_ICACHE_SIZE;
@@ -85,10 +85,10 @@ long sysconf(int name) {
             return UINT32_MAX;
         
         case _SC_PHYS_PAGES:
-            return page_count;
+            return MM_PAGE_COUNT;
         
         case _SC_AVPHYS_PAGES:
-            return mallinfo().fordblks / PAGESIZE;
+            return mallinfo().fordblks / MM_PAGE_SIZE;
 
         case _SC_NPROCESSORS_CONF: 
         case _SC_NPROCESSORS_ONLN: 

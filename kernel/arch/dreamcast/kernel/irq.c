@@ -19,6 +19,7 @@
 #include <arch/stack.h>
 #include <kos/dbgio.h>
 #include <kos/dbglog.h>
+#include <kos/mm.h>
 #include <kos/thread.h>
 #include <kos/library.h>
 #include <kos/regfield.h>
@@ -173,8 +174,8 @@ void irq_dump_regs(int code, irq_t evt) {
     if(code == 1) {
         dbglog(DBG_DEAD, "\nEncountered %s. ", irq_exception_string(evt));
 
-        valid_pc = arch_valid_text_address(irq_srt_addr->pc);
-        valid_pr = arch_valid_text_address(irq_srt_addr->pr);
+        valid_pc = mm_valid_text_address(irq_srt_addr->pc);
+        valid_pr = mm_valid_text_address(irq_srt_addr->pr);
         /* Construct template message only if either PC/PR address is valid */
         if(valid_pc || valid_pr) {
             dbglog(DBG_DEAD, "Use this template terminal command to help"
@@ -195,7 +196,7 @@ void irq_dump_regs(int code, irq_t evt) {
                 ret_addr = arch_fptr_ret_addr(fp);
 
                 /* Validate the return address */
-                if(!arch_valid_text_address(ret_addr))
+                if(!mm_valid_text_address(ret_addr))
                     break;
 
                 dbglog(DBG_DEAD, " %08lx", ret_addr);
