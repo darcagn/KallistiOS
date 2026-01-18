@@ -49,46 +49,6 @@ void arch_real_exit(int ret_code) __noreturn;
 void (*__kos_init_early_fn)(void) __attribute__((weak,section(".data"))) = NULL;
 
 int main(int argc, char **argv);
-uint32 _fs_dclsocket_get_ip(void);
-
-void arch_init_net_dcload_ip(void) {
-    union {
-        uint32 ipl;
-        uint8 ipb[4];
-    } ip = { 0 };
-
-    if(dcload_type == DCLOAD_TYPE_IP) {
-        /* Grab the IP address from dcload before we disable dbgio... */
-        ip.ipl = _fs_dclsocket_get_ip();
-        dbglog(DBG_INFO, "dc-load says our IP is %d.%d.%d.%d\n", ip.ipb[3],
-               ip.ipb[2], ip.ipb[1], ip.ipb[0]);
-        dbgio_disable();
-    }
-
-    net_init(ip.ipl);     /* Enable networking (and drivers) */
-
-    if(dcload_type == DCLOAD_TYPE_IP) {
-        fs_dclsocket_init_console();
-
-        if(!fs_dclsocket_init()) {
-            dbgio_dev_select("fs_dclsocket");
-            dbgio_enable();
-            dbglog(DBG_INFO, "fs_dclsocket console support enabled\n");
-        }
-    }
-}
-
-void arch_init_net_no_dcload(void) {
-    net_init(0);
-}
-
-KOS_INIT_FLAG_WEAK(arch_init_net_dcload_ip, true);
-KOS_INIT_FLAG_WEAK(arch_init_net_no_dcload, false);
-
-void arch_init_net(void) {
-    KOS_INIT_FLAG_CALL(arch_init_net_dcload_ip);
-    KOS_INIT_FLAG_CALL(arch_init_net_no_dcload);
-}
 
 void vmu_fs_init(void) {
     fs_vmu_init();
@@ -109,8 +69,6 @@ void fs_romdisk_mount_builtin_legacy(void) {
     fs_romdisk_mount_builtin();
 }
 
-KOS_INIT_FLAG_WEAK(arch_init_net, false);
-KOS_INIT_FLAG_WEAK(net_shutdown, false);
 KOS_INIT_FLAG_WEAK(maple_wait_scan, true);
 KOS_INIT_FLAG_WEAK(fs_romdisk_init, true);
 KOS_INIT_FLAG_WEAK(fs_romdisk_shutdown, true);
@@ -131,7 +89,6 @@ void dcload_init(void) {
 KOS_INIT_FLAG_WEAK(dcload_init, true);
 KOS_INIT_FLAG_WEAK(fs_dcload_init_console, true);
 KOS_INIT_FLAG_WEAK(fs_dcload_shutdown, true);
-KOS_INIT_FLAG_WEAK(fs_dclsocket_shutdown, true);
 KOS_INIT_FLAG_WEAK(fs_init, true);
 KOS_INIT_FLAG_WEAK(fs_dev_init, true);
 KOS_INIT_FLAG_WEAK(fs_dev_shutdown, true);
@@ -171,7 +128,6 @@ int  __weak_symbol arch_auto_init(void) {
     dbgio_add_handler(&dbgio_fb);
     dbgio_add_handler(&dbgio_null);
     dbgio_add_handler(&dbgio_scif);
-    dbgio_add_handler(&dbgio_dcls);
     dbgio_add_handler(&dbgio_dcload);
 
     /* Init debug IO */
@@ -229,17 +185,10 @@ int  __weak_symbol arch_auto_init(void) {
         KOS_INIT_FLAG_CALL(maple_wait_scan);  /* Wait for the maple scan to complete */
     }
 
-    if (!KOS_PLATFORM_IS_NAOMI)
-        KOS_INIT_FLAG_CALL(arch_init_net);
-
     return 0;
 }
 
 void  __weak_symbol arch_auto_shutdown(void) {
-    KOS_INIT_FLAG_CALL(fs_dclsocket_shutdown);
-    if (!KOS_PLATFORM_IS_NAOMI)
-        KOS_INIT_FLAG_CALL(net_shutdown);
-
     snd_shutdown();
     hardware_shutdown();
     /* XXX: We should investigate shrinking this irq_disabled

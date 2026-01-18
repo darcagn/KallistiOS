@@ -18,9 +18,6 @@
 #include <dc/sci.h>
 #include <dc/sd.h>
 
-/* For CRC16-CCITT */
-#include <kos/net.h>
-
 #include <kos/blockdev.h>
 #include <kos/dbglog.h>
 
@@ -88,6 +85,20 @@ static const uint8_t crc7_table[256] = {
     0x1c, 0x0e, 0x38, 0x2a, 0x54, 0x46, 0x70, 0x62,
     0x8c, 0x9e, 0xa8, 0xba, 0xc4, 0xd6, 0xe0, 0xf2
 };
+
+/* Based on code found at: http://www.ccsinfo.com/forum/viewtopic.php?t=24977 */
+uint16_t __pure sd_crc16ccitt(const uint8_t *data, int size, uint16_t start) {
+    uint16_t rv = start, tmp;
+
+    while(size--) {
+        tmp = (rv >> 8) ^ *data++;
+        tmp ^= tmp >> 4;
+
+        rv = (rv << 8) ^ (tmp << 12) ^ (tmp << 5) ^ tmp;
+    }
+
+    return rv;
+}
 
 uint8_t sd_crc7(const uint8_t *data, int size, uint8_t crc) {
     int tbl_idx;
@@ -478,7 +489,7 @@ static int read_data(size_t bytes, uint8_t *buf) {
     /* Read in the trailing CRC */
     if(check_crc) {
         crc = (spi_read_byte() << 8) | spi_read_byte();
-        return crc != net_crc16ccitt(buf, bytes, 0);
+        return crc != sd_crc16ccitt(buf, bytes, 0);
     }
     else {
         (void)spi_read_byte();
@@ -576,7 +587,7 @@ static int write_data(uint8_t tag, size_t bytes, const uint8_t *buf) {
     spi_write_byte(tag);
 
     /* Send the data. */
-    crc = net_crc16ccitt(buf, bytes, 0);
+    crc = sd_crc16ccitt(buf, bytes, 0);
     if(spi_write_data(buf, bytes)) {
         return -1;
     }

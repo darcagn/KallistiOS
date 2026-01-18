@@ -114,13 +114,6 @@ fs_pty_create
 fs_romdisk_mount
 fs_romdisk_unmount
 
-# Network Core
-net_reg_device
-net_unreg_device
-net_input
-net_input_set_target
-net_get_if_list
-
 # Threads
 cond_destroy
 cond_wait_timed

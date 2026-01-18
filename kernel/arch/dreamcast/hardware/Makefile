@@ -41,7 +41,7 @@ endif
 SUBDIRS = pvr maple
 
 ifneq ($(KOS_SUBARCH), naomi)
-	SUBDIRS += network modem
+	SUBDIRS += modem
 endif
 
 include $(KOS_BASE)/Makefile.prefab

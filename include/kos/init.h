@@ -50,10 +50,6 @@ __BEGIN_DECLS
 
 #define __KOS_INIT_FLAGS_0(flags) \
     const uint32_t __kos_init_flags = (flags); \
-    KOS_INIT_FLAG(flags, INIT_NET, arch_init_net); \
-    KOS_INIT_FLAG(flags, INIT_NET, net_shutdown); \
-    KOS_INIT_FLAG(flags, INIT_NET, eth_init); \
-    KOS_INIT_FLAG(flags, INIT_NET, eth_shutdown); \
     KOS_INIT_FLAG(flags, INIT_FS_ALL, fs_init); \
     KOS_INIT_FLAG(flags, INIT_FS_ALL, fs_shutdown); \
     KOS_INIT_FLAG(flags, INIT_FS_ROMDISK, fs_romdisk_init); \
@@ -151,7 +147,6 @@ extern const void * __kos_romdisk;
 #define INIT_NONE        0x00000000  /**< Don't init optional things */
 #define INIT_THD_PREEMPT 0x00000000  /**< \deprecated Already default mode */
 #define INIT_IRQ         0x00000001  /**< Enable IRQs at startup */
-#define INIT_NET         0x00000002  /**< Enable built-in networking */
 #define INIT_MALLOCSTATS 0x00000004  /**< Enable malloc statistics */
 #define INIT_QUIET       0x00000008  /**< Disable dbgio */
 #define INIT_EXPORT      0x00000010  /**< Export kernel symbols/dynamic libs */

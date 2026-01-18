@@ -49,14 +49,12 @@ __BEGIN_DECLS
 #include <kos/cond.h>
 #include <kos/genwait.h>
 #include <kos/library.h>
-#include <kos/net.h>
 #include <kos/nmmgr.h>
 #include <kos/exports.h>
 #include <kos/dbgio.h>
 #include <kos/blockdev.h>
 #include <kos/dbglog.h>
 #include <kos/elf.h>
-#include <kos/fs_socket.h>
 #include <kos/string.h>
 #include <kos/init.h>
 #include <kos/oneshot_timer.h>

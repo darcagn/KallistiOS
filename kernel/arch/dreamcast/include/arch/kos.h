@@ -32,7 +32,6 @@ __BEGIN_DECLS
 #include <dc/flashrom.h>
 #include <dc/fmath.h>
 #include <dc/fs_dcload.h>
-#include <dc/fs_dclsocket.h>
 #include <dc/fs_iso9660.h>
 #include <dc/fs_vmu.h>
 #include <dc/g1ata.h>
@@ -49,8 +48,6 @@ __BEGIN_DECLS
 #include <dc/matrix.h>
 #include <dc/memory.h>
 #include <dc/modem/modem.h>
-#include <dc/net/broadband_adapter.h>
-#include <dc/net/lan_adapter.h>
 #include <dc/perfctr.h>
 #include <dc/pvr.h>
 #include <dc/scif.h>
