@@ -10,7 +10,8 @@
 #include <ppp/ppp.h>
 
 #include <kos/thread.h>
-#include <kos/net.h>
+
+#include <kosnet/net.h>
 
 #ifdef PPP_DEBUG
 #include <kos/dbglog.h>

@@ -8,11 +8,11 @@
 #include <stdint.h>
 #include <string.h>
 
-#include <ppp/ppp.h>
-
-#include <kos/net.h>
-
 #include <arch/timer.h>
+
+#include <kosnet/net.h>
+
+#include <ppp/ppp.h>
 
 #include "ppp_internal.h"
 #include "net_ipv4.h"

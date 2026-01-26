@@ -8,9 +8,10 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
-#include <arpa/inet.h>
 
 #include <arch/timer.h>
+
+#include <kosnet/arpa/inet.h>
 
 #include <ppp/ppp.h>
 

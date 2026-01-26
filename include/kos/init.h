@@ -50,10 +50,8 @@ __BEGIN_DECLS
 
 #define __KOS_INIT_FLAGS_0(flags) \
     const uint32_t __kos_init_flags = (flags); \
-    KOS_INIT_FLAG(flags, INIT_NET, arch_init_net); \
-    KOS_INIT_FLAG(flags, INIT_NET, net_shutdown); \
-    KOS_INIT_FLAG(flags, INIT_NET, eth_init); \
-    KOS_INIT_FLAG(flags, INIT_NET, eth_shutdown); \
+    KOS_INIT_FLAG(flags, INIT_NET, arch_net_init); \
+    KOS_INIT_FLAG(flags, INIT_NET, arch_net_shutdown); \
     KOS_INIT_FLAG(flags, INIT_FS_ALL, fs_init); \
     KOS_INIT_FLAG(flags, INIT_FS_ALL, fs_shutdown); \
     KOS_INIT_FLAG(flags, INIT_FS_ROMDISK, fs_romdisk_init); \
