@@ -12,13 +12,14 @@
 #include <sys/queue.h>
 #include <sys/stat.h>
 
-#include <sys/socket.h>
 #include <sys/select.h>
-#include <netinet/in.h>
 
 #include <kos/fs.h>
 #include <kos/thread.h>
 #include <kos/mutex.h>
+
+#include <kosnet/netinet/in.h>
+#include <kosnet/sys/socket.h>
 
 struct http_state;
 typedef TAILQ_HEAD(http_state_list, http_state) http_state_list_t;

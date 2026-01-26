@@ -1,14 +1,13 @@
-# KallistiOS ##version##
 #
-# examples/dreamcast/network/ntp/Makefile
-# Copyright (C) 2023 Eric Fradella
+# Basic KallistiOS skeleton / test program
+# (c)2001 Megan Potter
 #
 
 # Put the filename of the output binary here
-TARGET = ntp.elf
+TARGET = echo.elf
 
 # List all of your C files here, but change the extension to ".o"
-OBJS = ntp.o
+OBJS = echo.o
 
 # Only build for pristine subarch (aka. "dreamcast")
 KOS_BUILD_SUBARCHS = pristine
@@ -24,7 +23,7 @@ rm-elf:
 	-rm -f $(TARGET)
 
 $(TARGET): $(OBJS)
-	kos-cc -o $(TARGET) $(OBJS)
+	kos-cc -o $(TARGET) $(OBJS) -lkosnet
 
 run: $(TARGET)
 	$(KOS_LOADER) $(TARGET)
@@ -32,3 +31,4 @@ run: $(TARGET)
 dist: $(TARGET)
 	-rm -f $(OBJS)
 	$(KOS_STRIP) $(TARGET)
+

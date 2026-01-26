@@ -1,8 +1,8 @@
 
 #include <kos/thread.h>
 
-#include <sys/socket.h>
-#include <netinet/in.h>
+#include <kosnet/netinet/in.h>
+#include <kosnet/sys/socket.h>
 
 typedef enum http_method {
     METHOD_GET = 1,

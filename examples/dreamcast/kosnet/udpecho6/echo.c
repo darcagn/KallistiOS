@@ -22,15 +22,15 @@
 #include <string.h>
 #include <unistd.h>
 
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-
 #include <kos/init.h>
-#include <kos/net.h>
 #include <kos/thread.h>
 #include <kos/dbgio.h>
 #include <dc/maple/controller.h>
+
+#include <kosnet/arpa/inet.h>
+#include <kosnet/net.h>
+#include <kosnet/netinet/in.h>
+#include <kosnet/sys/socket.h>
 
 KOS_INIT_FLAGS(INIT_DEFAULT | INIT_NET);
 

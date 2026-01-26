@@ -13,13 +13,13 @@
 #include <string.h>
 #include <unistd.h>
 
-#include <netdb.h>
-
 #include <arch/rtc.h>
 #include <kos/dbgio.h>
 #include <kos/init.h>
-#include <kos/net.h>
 #include <kos/thread.h>
+
+#include <kosnet/net.h>
+#include <kosnet/netdb.h>
 
 #define NTP_PORT    "123"
 #define NTP_SERVER  "us.pool.ntp.org"

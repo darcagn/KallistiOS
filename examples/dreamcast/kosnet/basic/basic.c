@@ -5,7 +5,10 @@
    Copyright (C) 2009 Lawrence Sebald
 */
 
-#include <kos.h>
+#include <stdio.h>
+#include <kos/init.h>
+#include <kos/thread.h>
+#include <kosnet/net.h>
 
 /*
 

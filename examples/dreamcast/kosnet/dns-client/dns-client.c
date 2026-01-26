@@ -14,15 +14,15 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <netdb.h>
-#include <sys/socket.h>
-#include <arpa/inet.h>
-#include <netinet/in.h>
-
 #include <kos/dbgio.h>
 #include <kos/init.h>
-#include <kos/net.h>
 #include <kos/thread.h>
+
+#include <kosnet/net.h>
+#include <kosnet/arpa/inet.h>
+#include <kosnet/netdb.h>
+#include <kosnet/netinet/in.h>
+#include <kosnet/sys/socket.h>
 
 KOS_INIT_FLAGS(INIT_DEFAULT | INIT_NET);
 

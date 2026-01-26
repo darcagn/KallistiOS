@@ -20,7 +20,7 @@ rm-elf:
 	-rm -f $(TARGET) romdisk.*
 
 $(TARGET): $(OBJS)
-	kos-cc -o $(TARGET) $(OBJS)
+	kos-cc -o $(TARGET) $(OBJS) -lkosnet
 
 run: $(TARGET)
 	$(KOS_LOADER) $(TARGET)

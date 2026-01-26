@@ -1,8 +1,14 @@
+# KallistiOS ##version##
+#
+# examples/dreamcast/network/ntp/Makefile
+# Copyright (C) 2023 Eric Fradella
+#
+
 # Put the filename of the output binary here
-TARGET = dns-client.elf
+TARGET = ntp.elf
 
 # List all of your C files here, but change the extension to ".o"
-OBJS = dns-client.o
+OBJS = ntp.o
 
 # Only build for pristine subarch (aka. "dreamcast")
 KOS_BUILD_SUBARCHS = pristine
@@ -18,7 +24,7 @@ rm-elf:
 	-rm -f $(TARGET)
 
 $(TARGET): $(OBJS)
-	kos-cc -o $(TARGET) $(OBJS)
+	kos-cc -o $(TARGET) $(OBJS) -lkosnet
 
 run: $(TARGET)
 	$(KOS_LOADER) $(TARGET)

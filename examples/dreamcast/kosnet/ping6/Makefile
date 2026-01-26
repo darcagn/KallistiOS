@@ -23,7 +23,7 @@ rm-elf:
 	-rm -f $(TARGET)
 
 $(TARGET): $(OBJS)
-	kos-cc -o $(TARGET) $(OBJS)
+	kos-cc -o $(TARGET) $(OBJS) -lkosnet
 
 run: $(TARGET)
 	$(KOS_LOADER) $(TARGET)
